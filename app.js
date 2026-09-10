@@ -1,0 +1,198 @@
+// BAGIAN 1
+// 1.1
+function calculateDiscountedPrice(price, discountPercent){
+return price - (price * discountPercent) / 100;
+}
+
+// bagian 1.2
+const cart = [
+{ title: "Laptop", price: 1000, discountPercent: 10 },
+{ title: "Mouse", price: 20, discountPercent: 5 },
+{ title: "Keyboard", price: 50, discountPercent: 0 }
+];
+
+function applyDiscounts(cart) {
+    const result = [];
+    for (const item of cart){
+        const harga_akhir = item.price - (item.price * item.discountPercent) / 100;
+        result.push({
+            title: item.title,
+            originalPrice: item.price,
+            discountPercent: item.discountPercent,
+            harga_akhir: harga_akhir});
+    }
+    return result;
+}
+console.log(applyDiscounts(cart));
+
+
+// BAGIAN 2
+// 2.1 
+const products = [
+  { id: 1, title: "Laptop", price: 1200, category: "laptops", stock: 5 },
+  { id: 2, title: "Smartphone", price: 800, category: "phones", stock: 15 },
+  { id: 3, title: "Headphones", price: 100, category: "audio", stock: 3 },
+  { id: 4, title: "Wireless Mouse", price: 25, category: "accessories", stock: 40 },
+  { id: 5, title: "Mechanical Keyboard", price: 75, category: "accessories", stock: 20 },
+  { id: 6, title: "27-inch Monitor", price: 300, category: "monitors", stock: 8 },
+  { id: 7, title: "USB-C Hub", price: 35, category: "accessories", stock: 25 },
+  { id: 8, title: "Tablet", price: 450, category: "tablets", stock: 10 },
+  { id: 9, title: "Smartwatch", price: 220, category: "wearables", stock: 12 },
+  { id: 10, title: "Bluetooth Speaker", price: 60, category: "audio", stock: 18 },
+  { id: 11, title: "External SSD 1TB", price: 110, category: "storage", stock: 22 },
+  { id: 12, title: "Webcam HD", price: 45, category: "accessories", stock: 30 },
+  { id: 13, title: "Gaming Chair", price: 250, category: "furniture", stock: 6 },
+  { id: 14, title: "Laptop Stand", price: 30, category: "accessories", stock: 35 },
+  { id: 15, title: "Wireless Earbuds", price: 90, category: "audio", stock: 28 },
+  { id: 16, title: "Power Bank 20000mAh", price: 40, category: "accessories", stock: 33 },
+  { id: 17, title: "4K Action Camera", price: 180, category: "cameras", stock: 9 },
+  { id: 18, title: "Router Wi-Fi 6", price: 130, category: "networking", stock: 14 },
+  { id: 19, title: "Graphics Tablet", price: 150, category: "accessories", stock: 7 },
+  { id: 20, title: "Portable Projector", price: 320, category: "electronics", stock: 4 },
+  { id: 21, title: "Smart Home Hub", price: 95, category: "smart-home", stock: 16 },
+  { id: 22, title: "Fitness Tracker", price: 55, category: "wearables", stock: 24 },
+  { id: 23, title: "Noise Cancelling Headset", price: 200, category: "audio", stock: 11 },
+  { id: 24, title: "Docking Station", price: 85, category: "accessories", stock: 19 },
+  { id: 25, title: "Mini PC", price: 400, category: "computers", stock: 5 },
+  { id: 26, title: "Wireless Charger Pad", price: 20, category: "accessories", stock: 45 },
+  { id: 27, title: "Smart LED Bulb", price: 15, category: "smart-home", stock: 50 },
+  { id: 28, title: "Digital Drawing Pen", price: 65, category: "accessories", stock: 17 },
+  { id: 29, title: "Portable SSD Case", price: 12, category: "storage", stock: 60 },
+  { id: 30, title: "Curved Gaming Monitor", price: 480, category: "monitors", stock: 6 }
+];
+
+function findProductById(products, id){
+    return products.find (item => item.id === id);
+}
+
+console.log(findProductById(products, 7));
+console.log(findProductById(products, 171));
+
+//2.2
+function stockMenipis(products, stock){
+    return products.filter(item => item.stock < 10);
+}
+console.log (stockMenipis(products))
+
+//2.3
+function updateStock(products, id, newStock){
+    return products.map(item => item.id === id ? { ...item, stock: newStock} : item);
+}
+
+const updatedProducts = updateStock(products, 4, 15);
+console.log(updatedProducts)
+console.log(products);
+
+// BAGIAN 3 - NESTED DATA
+const productsNested = [
+{
+    id: 1,
+    title: "Laptop",
+    price: 1200,
+    rating: 4.5,
+    stock: 10,
+    category: "laptops",
+    tags: ["computer", "electronics", "office"],
+    dimensions: { width: 30, height: 2, depth: 20 },
+    reviews: [
+        { user: "A", rating: 5, comment: "Good product" },
+        { user: "B", rating: 4, comment: "Worth it" }
+    ]
+},
+{
+    id: 2,
+    title: "Smartphone",
+    price: 800,
+    rating: 4.2,
+    stock: 15,
+    category: "phones",
+    tags: ["mobile", "electronics"],
+    dimensions: { width: 7, height: 0.8, depth: 15 },
+    reviews: [
+        { user: "C", rating: 4, comment: "Nice camera" },
+        { user: "D", rating: 5, comment: "Fast" },
+        { user: "E", rating: 3, comment: "Battery so-so" }
+    ]
+}
+];
+
+// 3.1 
+function getAllTags(products){
+    return products.map(p => p.tags);
+}
+console.log(getAllTags(productsNested))
+
+//3.2
+function findProductsByTag(products, tag){
+    return products.filter (p =>p.tags.includes(tag));
+}
+console.log(findProductsByTag(productsNested, "mobile"));
+
+//3.3
+function jumlahReviewProducts(products){
+    return products.map(p=> ({
+        id: p.id,
+        title: p.title,
+        totalReviews: p.reviews.length
+    }));
+}
+console.log(jumlahReviewProducts(productsNested));
+
+//3.4 
+function RatingReviewFiveStars(products){
+    const result = [];
+  for (const p of products) {
+    for (const r of p.reviews) {
+      if (r.rating === 5) result.push(r);
+    }
+  }
+  return result;
+}
+console.log(RatingReviewFiveStars(productsNested));
+
+//3.5 
+function getAverageRatingFromReviews(products) {
+  return products.map(p => {
+    const total = p.reviews.reduce((sum, r) => sum + r.rating, 0);
+    return {
+      id: p.id,
+      title: p.title,
+      averageRating: total / p.reviews.length
+    };
+  });
+}
+console.log(getAverageRatingFromReviews(productsNested));
+
+//3.6 
+function getMostReviewedProduct(products) {
+  return products.reduce((max, p) =>
+    p.reviews.length > max.reviews.length ? p : max
+  );
+}
+console.log(getMostReviewedProduct(productsNested));
+
+//3.7 
+function getAllReviewRatings(products) {
+  const result = [];
+  for (const p of products) {
+    for (const r of p.reviews) {
+      result.push(r.rating);
+    }
+  }
+  return result;
+}
+console.log(getAllReviewRatings(productsNested));
+
+// BAGIAN 4
+// 4.1
+function getAllTagsFlat(products) {
+  return products.flatMap(p => p.tags);
+}
+
+//4.2
+function getAllComments(products) {
+  return products.flatMap(p => p.reviews.map(r => r.comment));
+}
+
+console.log(getAllTagsFlat(productsNested));
+console.log(getAllComments(productsNested));
