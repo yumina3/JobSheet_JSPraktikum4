@@ -196,3 +196,135 @@ function getAllComments(products) {
 
 console.log(getAllTagsFlat(productsNested));
 console.log(getAllComments(productsNested));
+
+// BAGIAN 5
+// 5.1 
+const MeanAllProducts = products
+  .filter(p=>p.category === "laptops")
+  .map(p => p.price);
+
+const avg = MeanAllProducts.reduce((a,b)=> a+b, 0) / MeanAllProducts.length;
+
+// 5.2 
+function getStatistics(products) {
+  const totalProducts = products.length;
+  const prices = products.map(p=> p.price);
+  const averagePrice = prices.reduce((a,b)=> a+b,0)/ prices.length;
+  const highestPrice = Math.max(...prices);
+  const lowestPrice = Math.min(...prices);
+  const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
+  const ratings = products.map(p => p.rating);
+  const averageRating = ratings.reduce((a,b) => a + b, 0) / ratings.length;
+
+  return {
+    totalProducts,
+    averagePrice,
+    highestPrice,
+    lowestPrice,
+    totalStock,
+    averageRating
+  };
+}
+
+// BAGIAN 6
+// 6.1 
+function linearSearch(array, target) {
+   for (let i = 0; i < array.length; i++) { 
+    if (array[i] === target) return i; 
+  } 
+  return -1;
+}
+
+//6.2 
+function findProductByIdLinear (products, id){
+  for (let i = 0; i < products.length; i++){
+    if (products[i].id === id) return products[i];
+  }
+  return -1;
+}
+
+// BAGIAN 7
+// 7.1 
+function binarySearch(arr, target) { 
+  let left = 0; 
+  let right = arr.length - 1; 
+  while (left <= right) { 
+    const mid = Math.floor((left + right) / 2); 
+    if (arr[mid] === target) return mid; 
+    if (arr[mid] < target) left = mid + 1; 
+    else right = mid - 1; 
+  } 
+  return -1;
+}
+
+//7.2
+const sortedProducts = [...products].sort((a,b) => a.price - b.price);
+function binarySearchByPrice(sortedProducts,targetPrice){
+  let left =0; 
+  let right = sortedProducts.length - 1;
+  while (left <= right){
+    const mid = Math.floor((left + right) / 2);
+    if (sortedProducts[mid].price === targetPrice) return sortedProducts[mid];
+    if (sortedProducts[mid].price < targetPrice) left = mid + 1;
+    else right = mid - 1;
+  }
+  return -1;
+}
+
+// BAGIAN 8
+//8.1
+function bubbleSort(numbers) { 
+  const arr = [...numbers]; 
+  for (let i = 0; i < arr.length - 1; i++) { 
+    for (let j = 0; j < arr.length - 1 - i; j++) { 
+      if (arr[j] > arr[j + 1]) { 
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; 
+      } 
+    } 
+  } 
+  return arr;
+}
+
+//8.2
+function sortProducts(products, sortBy){
+  const sorted = [...products];
+  if (sortBy === "price-asc"){
+    sorted.sort((a,b) => a.price - b.price);
+  } else if (sortBy === "price-desc"){
+    sorted.sort((a,b)=> b.price - a.price);
+  } else if (sortBy === "rating"){
+    sorted.sort((a, b) => b.rating - a.rating);
+  } else if (sortBy === "title"){
+    sorted.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  return sorted;
+}
+
+console.log("5.1 - Rata-rata harga laptop:");
+console.log(avg);
+
+console.log("5.2 - Statistics:");
+console.log(getStatistics(products));
+
+console.log("6.1 - Linear Search:");
+console.log(linearSearch([1, 2, 3, 4, 5], 3));
+
+console.log("6.2 - Find Product by ID:");
+console.log(findProductByIdLinear(products, 2));
+
+console.log("7.1 - Binary Search:");
+console.log(binarySearch([1, 2, 3, 4, 5], 4));
+
+console.log("7.2 - Binary Search by Price:");
+console.log(binarySearchByPrice(sortedProducts, 250));
+
+console.log("8.1 - Bubble Sort:");
+console.log(bubbleSort([5, 3, 8, 1]));
+
+console.log("8.2 - Sort Products:");
+console.log(sortProducts(products, "price-asc"));
+console.log(sortProducts(products, "price-desc"));
+console.log(sortProducts(products, "rating"));
+console.log(sortProducts(products, "title"));
+
+
