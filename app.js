@@ -1,4 +1,7 @@
 // BAGIAN 1
+
+import { count } from "node:console";
+
 // 1.1
 function calculateDiscountedPrice(price, discountPercent){
 return price - (price * discountPercent) / 100;
@@ -327,4 +330,135 @@ console.log(sortProducts(products, "price-desc"));
 console.log(sortProducts(products, "rating"));
 console.log(sortProducts(products, "title"));
 
+// BAGIAN 9
+// 9.1
+function groupByCategory(products) { 
+  return products.reduce((groups, product) => { 
+    const key = product.category; 
+    if (!groups[key]) groups[key] = []; 
+    groups[key].push(product); 
+    return groups; 
+  }, {});
+}
+
+// 9.2
+function summaryPerCategory (products){
+  const grouped = groupByCategory(products);
+  const summary = Object.keys(grouped).map(category=> ({
+    category: category,
+    jumlah: grouped[category].length
+  }));
+  return summary;
+}
+console.table(summaryPerCategory(products));
+
+// BAGIAN 10
+// 10.1
+function countFrequency(array) {
+  return array.reduce((counts, item) => { 
+    counts[item] = (counts[item] || 0) + 1; 
+    return counts; 
+  }, {});
+}
+
+// 10.2
+const categoryFrequency = countFrequency(products.map(p => p.category));
+console.log("Frequency by category:", categoryFrequency);
+
+const allTags = products.flatMap(p => p.tags || []);
+const tagsFrequency = countFrequency(allTags);
+console.log("Frequency by tags:", tagsFrequency);
+
+const roundedRatings = products.map(p => Math.round(p.rating));
+const ratingFrequency = countFrequency(roundedRatings);
+console.log("Frequency by rating (rounded):", ratingFrequency);
+
+const brands = products
+  .filter(p => p.brand) 
+  .map(p => p.brand);
+const brandFrequency = countFrequency(brands);
+console.log("Frequency by brand:", brandFrequency);
+
+// BAGIAN 11
+// 11.1
+const uniqueCategories = [...new Set(products.map(p => p.category))];
+console.log("Unique categories:", uniqueCategories);
+
+const uniqueBrands = [... new Set(
+  products.filter(p=> p.brand).map(p=>p.brand)
+)];
+console.log("Unique brands:", uniqueBrands);
+
+const uniqueTags = [... new Set(products.flatMap(p => p.tags || []))];
+console.log("Unique tags:", uniqueTags);
+
+// BAGIAN 12
+// 12.1
+function buildProductLookup(products) {
+  const productMap = new Map();
+  for (const product of products) {
+    productMap.set(product.id, product);
+  }
+  return productMap;
+}
+
+const productLookup = buildProductLookup(products);
+console.log(productLookup.get(10));
+
+//BAGIAN 13
+// 13.1
+class Stack { 
+  constructor() { 
+    this.items = []; 
+  } 
+  push(item) { 
+    this.items.push(item); 
+  } 
+  pop() { 
+    return this.items.pop(); 
+  } 
+  peek() { 
+    return this.items[this.items.length - 1]; 
+  } 
+  isEmpty() { 
+    return this.items.length === 0; 
+  }
+}
+
+//13.2
+class ProductSearchHistory {
+  constructor() {
+    this.historyStack = new Stack();
+    this.currentKeyword = null;
+  }
+
+  search(keyword) {
+    if (this.currentKeyword !== null) {
+      this.historyStack.push(this.currentKeyword);
+    }
+    this.currentKeyword = keyword;
+    console.log(`Searching for: "${keyword}"`);
+    return keyword;
+  }
+
+  undoSearch() {
+    if (this.historyStack.isEmpty()) {
+      console.log("Tidak ada riwayat pencarian sebelumnya.");
+      return this.currentKeyword;
+    }
+    this.currentKeyword = this.historyStack.pop();
+    console.log(`Undo ke keyword: "${this.currentKeyword}"`);
+    return this.currentKeyword;
+  }
+}
+
+//cara pake yach
+const productExplorer = new ProductSearchHistory();
+productExplorer.search("laptop");
+productExplorer.search("phone");
+productExplorer.search("tablet");
+
+productExplorer.undoSearch(); 
+productExplorer.undoSearch(); 
+productExplorer.undoSearch();
 
