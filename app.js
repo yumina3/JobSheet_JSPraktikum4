@@ -462,3 +462,128 @@ productExplorer.undoSearch();
 productExplorer.undoSearch(); 
 productExplorer.undoSearch();
 
+// BAGIAN 14
+class Queue { 
+  constructor() { 
+    this.items = []; 
+  }
+   Enqueue(item) { this.items.push(item); } 
+   dequeue() { return this.items.shift(); } 
+   peek() { return this.items[0]; 
+
+   }}
+
+// BAGIAN 15
+const categories = [
+  {
+    name: "Electronics",
+    children: [
+      { name: "Laptop", children: [] },
+      { name: "Phone", children: [] }
+    ]
+  }
+];
+
+function printCategories(categories, depth = 0) {
+  for (const category of categories) {
+    console.log("  ".repeat(depth) + category.name);
+    if (category.children.length > 0) {
+      printCategories(category.children, depth + 1);
+    }
+  }
+}
+
+printCategories(categories);
+
+// BAGIAN 16
+// 16.1
+function linearSearchV2(arr, target) {
+  let steps = 0;
+  for (let i = 0; i < arr.length; i++) {
+    steps++;
+    if (arr[i] === target) {
+      return { index: i, steps };
+    }
+  }
+  return { index: -1, steps };
+}
+
+function binarySearchV2(arr, target) {
+  let steps = 0;
+  let low = 0;
+  let high = arr.length - 1;
+
+  while (low <= high) {
+    steps++;
+    const mid = Math.floor((low + high) / 2);
+    if (arr[mid] === target) {
+      return { index: mid, steps };
+    } else if (arr[mid] < target) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return { index: -1, steps };
+}
+
+const data = Array.from({ length: 10000 }, (_, i) => i);
+const target = 9999;
+console.log("Linear Search:", linearSearchV2(data, target));
+console.log("Binary Search:", binarySearchV2(data, target));
+
+//16.2
+function generateProducts(n) {
+  const categories = ["Electronics", "Fashion", "Food", "Books", "Toys"];
+  return Array.from({ length: n }, (_, i) => ({
+    id: i,
+    category: categories[i % categories.length]
+  }));
+}
+
+function findPairsNested(products) {
+  let steps = 0;
+  const pairs = [];
+  for (let i = 0; i < products.length; i++) {
+    for (let j = i + 1; j < products.length; j++) {
+      steps++;
+      if (products[i].category === products[j].category) {
+        pairs.push([products[i].id, products[j].id]);
+      }
+    }
+  }
+  return { pairs, steps };
+}
+
+function findPairsGrouped(products) {
+  let steps = 0;
+  const groups = new Map();
+
+  for (const product of products) {
+    steps++;
+    if (!groups.has(product.category)) {
+      groups.set(product.category, []);
+    }
+    groups.get(product.category).push(product.id);
+  }
+
+  const pairs = [];
+  for (const ids of groups.values()) {
+    for (let i = 0; i < ids.length; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        steps++;
+        pairs.push([ids[i], ids[j]]);
+      }
+    }
+  }
+
+  return { pairs, steps };
+}
+
+const products = generateProducts(1000);
+
+const resultNested = findPairsNested(products);
+const resultGrouped = findPairsGrouped(products);
+
+console.log("Nested Loop - jumlah pasangan:", resultNested.pairs.length, "steps:", resultNested.steps);
+console.log("Grouped Map - jumlah pasangan:", resultGrouped.pairs.length, "steps:", resultGrouped.steps);
