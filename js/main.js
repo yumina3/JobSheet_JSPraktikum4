@@ -14,8 +14,7 @@ import { sortProducts,
 const searchInput = document.querySelector("#search-input");
 const categorySelect = document.querySelector("#category-select");
 const sortSelect = document.querySelector("#sort-select");
-const searchModeSelect =
-  document.querySelector("#search-mode-select");
+const searchModeSelect = document.querySelector("#search-mode-select");
 
 //BAGIAN 18, 24, 25, 26
 function render() {

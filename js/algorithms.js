@@ -1,18 +1,28 @@
 // BAGIAN 8 SORTING
-export function sortProducts(products, sortBy) {
-  const sorted = [...products];
+function bubbleSort(arr, compareFn) {
+  const result = [...arr];
+  for (let i = 0; i < result.length - 1; i++) {
+    for (let j = 0; j < result.length - 1 - i; j++) {
+      if (compareFn(result[j], result[j + 1]) > 0) {
+        [result[j], result[j + 1]] = [result[j + 1], result[j]];
+      }
+    }
+  }
+  return result;
+}
 
+export function sortProducts(products, sortBy) {
   if (sortBy === "price-asc") {
-    sorted.sort((a, b) => a.price - b.price);
+    return bubbleSort(products, (a, b) => a.price - b.price);
   } else if (sortBy === "price-desc") {
-    sorted.sort((a, b) => b.price - a.price);
+    return bubbleSort(products, (a, b) => b.price - a.price);
   } else if (sortBy === "rating") {
-    sorted.sort((a, b) => b.rating - a.rating);
+    return bubbleSort(products, (a, b) => b.rating - a.rating);
   } else if (sortBy === "title") {
-    sorted.sort((a, b) => a.title.localeCompare(b.title));
+    return bubbleSort(products, (a, b) => a.title.localeCompare(b.title));
   }
 
-  return sorted;
+  return [...products];
 }
 
 // BAGIAN 6 SEARCHING
