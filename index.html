@@ -7,7 +7,15 @@
 <body>
   
 
-  <input type="text" id="search-input" placeholder="Cari produk...">
+  <input type="text" 
+  id="search-input" 
+  placeholder="Cari produk...">
+
+  <select id="search-mode-select">
+  <option value="case-insensitive">Case-Insensitive</option>
+  <option value="exact">Exact Search</option>
+  <option value="partial">Partial Search</option>
+  </select>
 
   <select id="category-select">
     <option value="all">Semua Kategori</option>
@@ -24,6 +32,15 @@
     <option value="title">Judul (A-Z)</option>
   </select>
 
+  <!--25.1-->
+  <h2>Statistics</h2>
+  <div id="statistics"></div>
+
+  <!--25.2-->
+  <h2>Category Analytics</h2>
+  <div id="category-analytics"></div>
+
+  <!--17/21-->
   <div id="product-list"></div>
 
  <!-- <script>
@@ -57,6 +74,7 @@
   </script>
   -->
 
+  <!--bagian 21-->
   <script type="module" src="js/main.js"></script>
   
 </body>

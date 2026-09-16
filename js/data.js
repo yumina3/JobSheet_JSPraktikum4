@@ -35,3 +35,13 @@ export const dummyProducts = [
     thumbnail: "https://via.placeholder.com/150"
   }
 ];
+
+/**BAGIAN 23
+export function getProducts() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dummyProducts);
+    }, 500);
+  });
+}
+*/

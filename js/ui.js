@@ -20,3 +20,43 @@ export function renderProducts(products) {
     container.append(card);
   }
 }
+
+//BAGIAN 25
+//25.1
+export function renderStatistics(statistics) {
+
+  const container = document.querySelector("#statistics");
+
+  container.innerHTML = `
+    <p>Total Products: ${statistics.totalProducts}</p>
+    <p>Average Price: $${statistics.averagePrice.toFixed(2)}</p>
+    <p>Highest Price: $${statistics.highestPrice.toFixed(2)}</p>
+    <p>Lowest Price: $${statistics.lowestPrice.toFixed(2)}</p>
+    <p>Total Stock: ${statistics.totalStock}</p>
+    <p>Average Rating: ${statistics.averageRating.toFixed(2)}</p>
+  `;
+}
+
+//25.2
+export function renderCategoryAnalytics(analytics) {
+
+  const container =
+    document.querySelector("#category-analytics");
+
+  container.innerHTML = "";
+
+  for (const [category, data] of analytics) {
+
+    const div = document.createElement("div");
+
+    div.innerHTML = `
+      <h3>${category}</h3>
+      <p>Jumlah Produk: ${data.count}</p>
+      <p>Rata-rata Harga: $${data.averagePrice.toFixed(2)}</p>
+      <p>Rata-rata Rating: ${data.averageRating.toFixed(2)}</p>
+      <p>Total Stock: ${data.totalStock}</p>
+    `;
+
+    container.append(div);
+  }
+}
